@@ -1409,6 +1409,7 @@ function updateObjectAttributes ($object_id)
 			case 'float':
 			case 'string':
 			case 'date':
+                        case 'asn':
 				$oldvalue = $oldvalues[$attr_id]['value'];
 				break;
 			case 'dict':

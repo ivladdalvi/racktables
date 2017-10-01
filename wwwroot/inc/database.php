@@ -3342,6 +3342,7 @@ function searchByAttrValue ($attr_id, $value)
 		case 'uint':
 		case 'dict':
 		case 'date':
+                case 'asn':
 			$field = 'uint_value';
 			break;
 		default:
@@ -3789,6 +3790,7 @@ function fetchAttrsForObjects ($object_set = array())
 				$record['value'] = $row[$row['attr_type'] . '_value'];
 				parseWikiLink ($record);
 				break;
+                        case 'asn':
 			case 'date':
 				$record['value'] = $row['uint_value'];
 				break;
@@ -3863,6 +3865,7 @@ function commitUpdateAttrValue ($object_id, $attr_id, $value = '')
 			break;
 		case 'dict':
 		case 'date':
+                case 'asn':
 			$column = 'uint_value';
 			break;
 		default:

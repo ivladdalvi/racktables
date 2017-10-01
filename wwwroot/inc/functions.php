@@ -371,7 +371,7 @@ function genericAssertion ($argname, $argtype)
 		return $argvalue;
 	case 'enum/attr_type':
 		assertStringArg ($argname);
-		if (!in_array ($sic[$argname], array ('uint', 'float', 'string', 'dict','date')))
+		if (!in_array ($sic[$argname], array ('uint', 'float', 'string', 'dict','date', 'asn')))
 			throw new InvalidRequestArgException ($argname, $sic[$argname], 'Unknown value');
 		return $sic[$argname];
 	case 'enum/vlan_type':
@@ -6670,5 +6670,34 @@ function syncObjectPorts ($object_id, $desiredPorts)
 	$dbxlink->exec ('UNLOCK TABLES');
 	showSuccess (sprintf ('Added ports: %u, changed: %u, deleted: %u', count ($to_add), count ($to_update), count ($to_delete)));
 }
+
+# Returns ASN in asplain and asdot notation as specified by RFC5396
+function asnFromUInt ($asn = 0)
+{
+        if ($asn >= 65536)
+        {
+                return (string)((int)($asn/65536)).".".(string)($asn%65536)." (".$asn.")";
+        }
+        return $asn;
+}
+
+# Returns int from ASN in asplain or asdot notation
+function uIntFromAsn ($asn)
+{
+//        if (is_int ($asn) and (int)($asn) > 0 and (int)($asn) <= 2**32)
+//        {
+                return (int)($asn);
+//        }
+//        if preg_match ('/^\s+(\d+)\.(\d+)\s+/', $asn, $matches)
+//        {
+//                if ($matches[1] >=0 and $matches[1] <= 2**16 and
+//                  $matches[2] >= 0 and $matches[2] <= 2**16)
+//                {
+//                        return (int)($matches[1])*2**16+(int)$matches[2];
+//                }
+//        }
+//        throw new InvalidRequestArgException($asn, '', 'does not conform to RFC5396');
+}
+
 
 ?>

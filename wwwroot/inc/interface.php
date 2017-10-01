@@ -78,7 +78,8 @@ $attrtypes = array
 	'float' => '[F] floating point',
 	'string' => '[S] string',
 	'dict' => '[D] dictionary record',
-	'date' => '[T] date'
+	'date' => '[T] date',
+        'asn' => '[A] AS number'
 );
 
 function showLogoutURL ()
@@ -776,6 +777,7 @@ function renderEditRowForm ($row_id)
 			case 'uint':
 			case 'float':
 			case 'string':
+                        case 'asn':
 				echo "<input type=text name=${i}_value value='${record['value']}'>";
 				break;
 			case 'dict':
@@ -1149,6 +1151,7 @@ function renderEditObjectForm()
 				case 'uint':
 				case 'float':
 				case 'string':
+                                case 'asn':
 					echo "<input type=text name=${i}_value value='${record['value']}'>";
 					break;
 				case 'dict':
@@ -1239,6 +1242,7 @@ function renderEditRackForm ($rack_id)
 			case 'uint':
 			case 'float':
 			case 'string':
+                        case 'asn':
 				echo "<input type=text name=${i}_value value='${record['value']}'>";
 				break;
 			case 'dict':
@@ -4107,6 +4111,7 @@ function renderEditLocationForm ($location_id)
 			case 'uint':
 			case 'float':
 			case 'string':
+                        case 'asn':
 				echo "<input type=text name=${i}_value value='${record['value']}'>";
 				break;
 			case 'dict':
@@ -5986,6 +5991,8 @@ function formatAttributeValue ($record)
 {
 	if ('date' == $record['type'])
 		return datetimestrFromTimestamp ($record['value']);
+        if ('asn' == $record['type'])
+                return asnFromUInt ($record['value']);
 
 	if (! isset ($record['key'])) // if record is a dictionary value, generate href with autotag in cfe
 	{
